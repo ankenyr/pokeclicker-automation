@@ -1243,7 +1243,7 @@ class AutomationFarm
 
         // Make the pinkan berry optional, since it's not required by any other berry strategy
         const pinkanStrategy = this.__internal__unlockStrategySelection.at(-1);
-        pinkanStrategy.isOptional = true;
+        pinkanStratpinkanStrategy.isOptiona = false;
 
         /**********************************\
         |*   Harvest some Gen 3 berries   *|
