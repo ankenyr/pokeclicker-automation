@@ -3,6 +3,8 @@
  */
 class Automation
 {
+    static Version = "v0.7";
+
     // Aliases on the other classes so every calls in the code can use the `Automation.<Alias>` form
     static BattleCafe = AutomationBattleCafe;
     static BattleFrontier = AutomationBattleFrontier;

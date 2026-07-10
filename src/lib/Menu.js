@@ -43,7 +43,8 @@ class AutomationMenu
         if (initStep != Automation.InitSteps.BuildMenu) return;
 
         let boltImage = '<img src="assets/images/badges/Bolt.svg" height="20px">';
-        let automationTitle = `${boltImage}Automation${boltImage}`;
+        let automationTitle = `${boltImage}Automation${boltImage}`
+                             + `<div class="automationVersion">${Automation.Version}</div>`;
         this.AutomationButtonsDiv = this.addCategory("automationButtons", automationTitle);
     }
 
@@ -1182,6 +1183,13 @@ class AutomationMenu
                 border: 1px solid #aaaaaa;
                 padding-top: 5px;
                 padding-bottom: 6px;
+            }
+            .automationVersion
+            {
+                font-size: .7rem;
+                font-weight: 400;
+                color: #aaaaaa;
+                line-height: normal;
             }
             .automationFloatingCategory
             {
