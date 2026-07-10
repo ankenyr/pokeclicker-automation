@@ -2774,6 +2774,11 @@ describe(`${AutomationTestUtils.categoryPrefix}Edge cases`, () =>
         // Restore the item unlock status
         App.game.oakItems.itemList[OakItemType.Sprinklotad].__isUnlocked = true;
 
+        // Restore the auto-equip setting and let the pending watcher resolve itself,
+        // so it does not leak into the next tests
+        Automation.Utils.LocalStorage.setValue(Automation.Farm.Settings.OakItemLoadoutUpdate, true);
+        jest.advanceTimersByTime(5000);
+
         // Reenable the feature
         Automation.Utils.LocalStorage.setValue(Automation.Farm.Settings.FocusOnUnlocks, true);
     });
@@ -2801,17 +2806,16 @@ describe(`${AutomationTestUtils.categoryPrefix}Edge cases`, () =>
 
         expectFocusOnUnlocksToBeDisabled(function()
             {
-                // Simulate the player unlocking the Pinkan berry
-                pinkanBerryData.unlocked = true;
-
-                // Expect the feature to be reenabled
-                return true;
+                // Expect the feature to stay disabled
+                return false;
             });
 
-        // Make sure the next unlock strategy gets set
+        // Simulate the player unlocking the Pinkan berry and manually reenabling the feature
+        pinkanBerryData.unlocked = true;
+        Automation.Utils.LocalStorage.setValue(Automation.Farm.Settings.FocusOnUnlocks, true);
         Automation.Farm.__internal__farmLoop();
 
-        // Expect the strategy to still be pointing to the Pinkan berry
+        // Expect the strategy to be pointing to the Pinkan berry, instead of having been skipped
         expect(Automation.Farm.__internal__currentStrategy).toBe(Automation.Farm.__internal__unlockStrategySelection[53]);
 
         // Restore the player's berries (for the next test)
